@@ -346,13 +346,12 @@ const carrouseldata = [
 ];
 
 export function EmblaCarousel() {
-    const [emblaRef, emblaApi] = useEmblaCarousel(
-        { loop: true },
-        [Autoplay({ 
-          stopOnInteraction: false,
-          delay: 4000 
-        })]
-      );
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+    Autoplay({
+      stopOnInteraction: false,
+      delay: 4000,
+    }),
+  ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
@@ -381,12 +380,45 @@ export function EmblaCarousel() {
                 {selectedIndex === index && (
                   <motion.div
                     key={`motion-${index}`}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.1,
+                        },
+                      },
+                      exit: {
+                        opacity: 0,
+                        transition: {
+                          staggerChildren: 0.05,
+                        },
+                      },
+                    }}
                     className="relative w-[661px] text-left h-[230px] font-lexend font-bold text-[40px] leading-[54px]"
                   >
-                    {item.motto}
+                    {item.motto.split(" ").map((word, i) => (
+                      <motion.span
+                        key={i}
+                        className="inline-block mr-2"
+                        variants={{
+                          hidden: { y: 20, opacity: 0 },
+                          visible: {
+                            y: 0,
+                            opacity: 1,
+                          },
+                          exit: {
+                            y: -20,
+                            opacity: 0,
+                          },
+                        }}
+                      >
+                        {word}
+                      </motion.span>
+                    ))}
                   </motion.div>
                 )}
               </AnimatePresence>
