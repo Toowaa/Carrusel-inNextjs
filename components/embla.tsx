@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-
+import { motion, AnimatePresence } from "framer-motion";
 
 const carrouseldata = [
   {
@@ -346,16 +346,20 @@ const carrouseldata = [
 ];
 
 export function EmblaCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay()]);
-  const [backgroundImage, setBackgroundImage] = useState(
-    carrouseldata[0].background
-  );
+    const [emblaRef, emblaApi] = useEmblaCarousel(
+        { loop: true },
+        [Autoplay({ 
+          stopOnInteraction: false,
+          delay: 4000 
+        })]
+      );
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     if (emblaApi) {
       emblaApi.on("select", () => {
-        const selectedIndex = emblaApi.selectedScrollSnap();
-        setBackgroundImage(carrouseldata[selectedIndex].background);
+        const currentIndex = emblaApi.selectedScrollSnap();
+        setSelectedIndex(currentIndex);
       });
     }
   }, [emblaApi]);
@@ -370,12 +374,22 @@ export function EmblaCarousel() {
               <div className="pr-[80px]">{item.edad}</div>
             </div>
             <div
-              className="h-[578px] bg-cover  flex items-center  bg-center pl-[79px]"
+              className="h-[578px] bg-cover flex items-center bg-center pl-[79px]"
               style={{ backgroundImage: `url(${item.background})` }}
             >
-              <p className="w-[661px] text-left h-[230px] font-lexend font-bold text-[40px] leading-[54px]">
-                {item.motto}
-              </p>
+              <AnimatePresence mode="wait">
+                {selectedIndex === index && (
+                  <motion.div
+                    key={`motion-${index}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="relative w-[661px] text-left h-[230px] font-lexend font-bold text-[40px] leading-[54px]"
+                  >
+                    {item.motto}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
             <div className="pt-12 flex justify-center">
               <div className="max-w-[829px] h-[89px] font-lexend font-normal text-[16px] leading-[28px] text-center">
