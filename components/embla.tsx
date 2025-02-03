@@ -366,7 +366,7 @@ export function EmblaCarousel() {
   }, [emblaApi]);
 
   return (
-    <div className="embla" ref={emblaRef}>
+    <div className="embla " ref={emblaRef}>
       <div className="embla__container">
         {carrouseldata.map((item, index) => (
           <div className="embla__slide" key={index}>
@@ -375,8 +375,8 @@ export function EmblaCarousel() {
               <div className="pr-[80px]">{item.edad}</div>
             </div>
             <div
-              className="h-[578px] bg-cover flex items-center bg-center pl-[79px]"
-              style={{ backgroundImage:`url(${item.background})` }}
+              className="h-[578px] bg-cover   flex items-center bg-center pl-[79px]"
+              style={{ backgroundImage:`linear-gradient(to bottom, #634AE27A, #0000007A),url(${item.background})` }}
             >
               <AnimatePresence mode="wait">
                 {selectedIndex === index && (
@@ -439,7 +439,7 @@ export function EmblaCarousel() {
             <div className="flex justify-center py-8">
               <div className="flex pt-14 flex-col items-center gap-y-20">
                 {/* Primera fila - 3 iconos */}
-                <div className="flex flex-col md:flex-row gap-y-12 md:gap-y-0 md:gap-x-[229px]">
+                <div className="flex flex-col md:flex-row lg:gap-y-0  gap-y-12 md:gap-y-0 md:gap-x-[229px]">
                   {item.iconos?.slice(0, 3).map((icono,index) => (
                  
                  <motion.div
@@ -515,7 +515,7 @@ export function EmblaCarousel() {
             </div>
             <div className="flex justify-center py-8 px-4 md:px-8">
               <div className="flex flex-col items-center gap-y-12">
-                <div className="flex flex-col md:flex-row gap-y-8 md:gap-x-8">
+                <div className="flex flex-col  xl:flex-row   gap-y-8 md:gap-x-8">
                   {item.cards?.slice(0, 3).map((card) => (
                    
                    <motion.div 
@@ -554,7 +554,7 @@ export function EmblaCarousel() {
                     </div>  </motion.div>
                   ))}
                 </div>
-                <div className="flex flex-col md:flex-row gap-y-8 md:gap-x-8">
+                <div className="flex flex-col xl:flex-row gap-y-8 md:gap-x-8">
                   {item.cards?.slice(3, 5).map((card) => (
                    
                    <motion.div 
